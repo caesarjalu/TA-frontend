@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import features from "../data/data-jatim.json";
-import "./Map.css";
+import feat from "../data/data-jatim.json";
 //import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Map = () => {
+const Map = ({ province }) => {
   const mapStyle = {
-    height: "100vh",
-    width: "100%",
-    margin: "0 auto",
+    weight: 1,
+    color: "black",
+    fillOpacity: 0.7,
   };
 
   const maxBounds = [
@@ -17,31 +16,29 @@ const Map = () => {
     [-10.721113949189322, 117.8411522825802], // North East
   ];
 
+  const onEachProvince = (province, layer) => {
+    layer.options.fillColor = province.properties.color;
+    const name = province.properties.KABUPATEN;
+    const number = province.properties.prevalence;
+    layer.bindPopup(`${name} ${number}`);
+  };
+
   return (
-    <div className="container">
-      <div className="header">
-        <h2 className="heading">Stunting Jawa Timur</h2>
-      </div>
-      <div className="">
-        <div className="">
-          <MapContainer
-            center={[-7.721113949189322, 112.8411522825802]}
-            zoom={8}
-            scrollWheelZoom={true}
-            style={mapStyle}
-            minZoom={7}
-            maxZoom={13}
-            maxBounds={maxBounds}
-          >
-            <TileLayer
-              attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-              url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <GeoJSON data={features} />
-          </MapContainer>
-        </div>
-      </div>
-    </div>
+    <MapContainer
+      center={[-7.721113949189322, 112.8411522825802]}
+      zoom={8}
+      scrollWheelZoom={true}
+      style={{ height: "100vh", width: "100%", margin: "0 auto" }}
+      minZoom={7}
+      maxZoom={13}
+      maxBounds={maxBounds}
+    >
+      <TileLayer
+        attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      <GeoJSON data={feat} style={mapStyle} onEachFeature={onEachProvince} />
+    </MapContainer>
   );
 };
 export default Map;
