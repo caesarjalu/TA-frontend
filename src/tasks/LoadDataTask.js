@@ -10,7 +10,10 @@ class LoadDataTask {
     this.year = options.year;
     if (options.mode === "news_data") {
       // do news data
+      console.log("News Data");
+      this.#processStuntingPrevalenceData();
     } else {
+      console.log("Prevalence Data");
       this.#processStuntingPrevalenceData();
     }
   };
@@ -29,7 +32,7 @@ class LoadDataTask {
       province.properties.prevalence = prevalence;
       province.properties.color = this.#setPrevalenceColor(prevalence);
     }
-    // console.log(mapJatim);
+    // console.log(mapJatim.features[0].properties.color);
     this.setState(mapJatim);
   };
 

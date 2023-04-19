@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import Main from "./components/Main";
-// import Legend from './components/Legend';
+import Loading from "./components/Loading";
+
 const App = () => {
   return (
     <div className="container">
       <Main />
-      {/*<Legend/>*/}
+      {/*<Loading />*/}
     </div>
   );
 };

@@ -4,7 +4,7 @@ import "leaflet/dist/leaflet.css";
 import feat from "../data/data-jatim.json";
 //import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Map = ({ province }) => {
+const Map = ({ province, key }) => {
   const mapStyle = {
     weight: 1,
     color: "black",
@@ -17,6 +17,7 @@ const Map = ({ province }) => {
   ];
 
   const onEachProvince = (province, layer) => {
+    console.log("onEachProvince");
     layer.options.fillColor = province.properties.color;
     const name = province.properties.KABUPATEN;
     const number = province.properties.prevalence;
@@ -28,7 +29,7 @@ const Map = ({ province }) => {
       center={[-7.721113949189322, 112.8411522825802]}
       zoom={8}
       scrollWheelZoom={true}
-      style={{ height: "100vh", width: "100%", margin: "0 auto" }}
+      style={{ height: "90vh", width: "100%", margin: "0 auto" }}
       minZoom={7}
       maxZoom={13}
       maxBounds={maxBounds}
@@ -37,7 +38,12 @@ const Map = ({ province }) => {
         attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <GeoJSON data={feat} style={mapStyle} onEachFeature={onEachProvince} />
+      <GeoJSON
+        key={key}
+        data={province}
+        style={mapStyle}
+        onEachFeature={onEachProvince}
+      />
     </MapContainer>
   );
 };
