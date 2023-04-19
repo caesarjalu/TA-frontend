@@ -1,44 +1,27 @@
 import React, { useState, useCallback } from "react";
-import {
-  Box,
-  Paper,
-  Stack,
-  styled,
-  Tab,
-  Slider,
-  Card,
-  CardContent,
-} from "@mui/material";
+import { Box, Paper, Stack, Tab, Slider } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 
 import "./Legend.css";
 
 const Legend = ({ setOptions }) => {
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  }));
-
   const marks = [
     {
       value: 2019,
       label: "2019",
     },
-    // {
-    //   value: 2020,
-    //   label: "2020",
-    // },
-    // {
-    //   value: 2021,
-    //   label: "2021",
-    // },
-    // {
-    //   value: 2022,
-    //   label: "2022",
-    // },
+    {
+      value: 2020,
+      label: "2020",
+    },
+    {
+      value: 2021,
+      label: "2021",
+    },
+    {
+      value: 2022,
+      label: "2022",
+    },
     {
       value: 2023,
       label: "2023",
@@ -120,27 +103,9 @@ const Legend = ({ setOptions }) => {
               <div style={{ "--color": "#08519C" }}>&gt;15 Berita</div>
             </TabPanel>
           </TabContext>
-          {/*<div className="legend-description">*/}
-          {/*<div style={{ "--color": "#a50f15" }}>3023 - 6247</div>*/}
-          {/*<div style={{ "--color": "#de2d26" }}>676 - 3022</div>*/}
-          {/*<div style={{ "--color": "#fb6a4a" }}>428 - 675</div>*/}
-          {/*<div style={{ "--color": "#fc9272" }}>236 - 427</div>*/}
-          {/*<div style={{ "--color": "#fcbba1" }}>23 - 235</div>*/}
-          {/*<div style={{ "--color": "#fee5d9" }}>6 - 22</div>*/}
-          {/*</div>*/}
         </Paper>
       </Stack>
     </Box>
-    // <div>
-    //   <div className="legend">
-    //     <div style={{ "--color": "#a50f15" }}>3023 - 6247</div>
-    //     <div style={{ "--color": "#de2d26" }}>676 - 3022</div>
-    //     <div style={{ "--color": "#fb6a4a" }}>428 - 675</div>
-    //     <div style={{ "--color": "#fc9272" }}>236 - 427</div>
-    //     <div style={{ "--color": "#fcbba1" }}>23 - 235</div>
-    //     <div style={{ "--color": "#fee5d9" }}>6 - 22</div>
-    //   </div>
-    // </div>
   );
 };
 export default Legend;

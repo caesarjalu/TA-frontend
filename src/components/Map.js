@@ -1,8 +1,6 @@
 import React from "react";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import feat from "../data/data-jatim.json";
-//import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Map = ({ province, key }) => {
   const mapStyle = {
