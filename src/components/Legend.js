@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { Box, Paper, Stack, Tab, Slider } from "@mui/material";
+import { Box, Paper, Stack, Tab, Slider, Typography } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 
 import "./Legend.css";
@@ -82,13 +82,19 @@ const Legend = ({ setOptions }) => {
               sx={{ padding: 2 }}
             >
               <div style={{ "--color": "#024E1B" }}>
-                &lt;2.5% : Sangat Rendah
+                <Typography>&lt;2.5% : Sangat Rendah</Typography>
               </div>
-              <div style={{ "--color": "#006B3E" }}>2.5-10% : Rendah</div>
-              <div style={{ "--color": "#FFE733" }}>10-20% : Sedang</div>
-              <div style={{ "--color": "#FF8C01" }}>20-30% : Tinggi</div>
+              <div style={{ "--color": "#006B3E" }}>
+                <Typography>2.5-10% : Rendah</Typography>
+              </div>
+              <div style={{ "--color": "#FFE733" }}>
+                <Typography>10-20% : Sedang</Typography>
+              </div>
+              <div style={{ "--color": "#FF8C01" }}>
+                <Typography>20-30% : Tinggi</Typography>
+              </div>
               <div style={{ "--color": "#ED2938" }}>
-                &gt;30% : Sangat Tinggi
+                <Typography>&gt;30% : Sangat Tinggi</Typography>
               </div>
             </TabPanel>
             <TabPanel
@@ -96,11 +102,21 @@ const Legend = ({ setOptions }) => {
               className="legend-description"
               sx={{ padding: 2 }}
             >
-              <div style={{ "--color": "#DDDDDD" }}>0 Berita</div>
-              <div style={{ "--color": "#BDD7E7" }}>1-5 Berita</div>
-              <div style={{ "--color": "#6BAED6" }}>6-10 Berita</div>
-              <div style={{ "--color": "#3182BD" }}>11-15 Berita</div>
-              <div style={{ "--color": "#08519C" }}>&gt;15 Berita</div>
+              <div style={{ "--color": "#DDDDDD" }}>
+                <Typography>0 Berita</Typography>
+              </div>
+              <div style={{ "--color": "#BDD7E7" }}>
+                <Typography>1-5 Berita</Typography>
+              </div>
+              <div style={{ "--color": "#6BAED6" }}>
+                <Typography>6-10 Berita</Typography>
+              </div>
+              <div style={{ "--color": "#3182BD" }}>
+                <Typography>11-15 Berita</Typography>
+              </div>
+              <div style={{ "--color": "#08519C" }}>
+                <Typography>&gt;15 Berita</Typography>
+              </div>
             </TabPanel>
           </TabContext>
         </Paper>
