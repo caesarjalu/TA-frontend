@@ -98,8 +98,8 @@ const Legend = ({ setOptions }) => {
             >
               <div style={{ "--color": "#DDDDDD" }}>0 Berita</div>
               <div style={{ "--color": "#BDD7E7" }}>1-5 Berita</div>
-              <div style={{ "--color": "#6BAED6" }}>5-10 Berita</div>
-              <div style={{ "--color": "#3182BD" }}>10-15 Berita</div>
+              <div style={{ "--color": "#6BAED6" }}>6-10 Berita</div>
+              <div style={{ "--color": "#3182BD" }}>11-15 Berita</div>
               <div style={{ "--color": "#08519C" }}>&gt;15 Berita</div>
             </TabPanel>
           </TabContext>

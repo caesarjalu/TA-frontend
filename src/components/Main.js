@@ -3,6 +3,7 @@ import LoadDataTask from "../tasks/LoadDataTask";
 import Map from "./Map";
 import Legend from "./Legend";
 import Loading from "./Loading";
+import Navbar from "./Navbar";
 
 const Main = () => {
   const [province, setProvince] = useState([]);
@@ -32,11 +33,9 @@ const Main = () => {
         <Loading />
       ) : (
         <div>
-          <div className="header">
-            <h2 className="heading">Stunting Jawa Timur</h2>
-          </div>
+          <Navbar />
           <div>
-            <Map province={province} key={key} />
+            <Map province={province} key={key} options={options} />
           </div>
           <div>
             <Legend setOptions={handleOptionChange} />

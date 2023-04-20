@@ -1,5 +1,6 @@
 import mapJatim from "../data/data-jatim.json";
-import stunting_data from "../data/data-stunting.json";
+import stuntingData from "../data/data-stunting.json";
+import newsData from "../data/data-berita-dummy.json";
 
 class LoadDataTask {
   setState = null;
@@ -11,7 +12,7 @@ class LoadDataTask {
     if (options.mode === "news_data") {
       // do news data
       console.log("News Data");
-      this.#processStuntingPrevalenceData();
+      this.#processStuntingNewsData();
     } else {
       console.log("Prevalence Data");
       this.#processStuntingPrevalenceData();
@@ -20,14 +21,14 @@ class LoadDataTask {
 
   #processStuntingPrevalenceData = () => {
     let localYear = this.year;
-    if (!stunting_data[this.year]) {
+    if (!stuntingData[this.year]) {
       localYear = this.year - 1;
     }
     for (let i = 0; i < mapJatim.features.length; i++) {
       const province = mapJatim.features[i];
       const name = province.properties.KABUPATEN;
-      const prevalence = stunting_data[localYear][name]
-        ? stunting_data[localYear][name]
+      const prevalence = stuntingData[localYear][name]
+        ? stuntingData[localYear][name]
         : 0;
       province.properties.prevalence = prevalence;
       province.properties.color = this.#setPrevalenceColor(prevalence);
@@ -46,6 +47,33 @@ class LoadDataTask {
       : prevalence > 2.5
       ? "#006B3E"
       : "#024E1B";
+  };
+
+  #processStuntingNewsData = () => {
+    let localYear = this.year;
+    for (let i = 0; i < mapJatim.features.length; i++) {
+      const province = mapJatim.features[i];
+      const name = province.properties.KABUPATEN;
+      const newsCount = newsData[localYear][name]
+        ? newsData[localYear][name]
+        : 0;
+      province.properties.news_count = newsCount;
+      province.properties.color = this.#setNewsDataColor(newsCount);
+    }
+    // console.log(mapJatim.features[0].properties.color);
+    this.setState(mapJatim);
+  };
+
+  #setNewsDataColor = (newsCount) => {
+    return newsCount > 15
+      ? "#08519C"
+      : newsCount > 10
+      ? "#3182BD"
+      : newsCount > 5
+      ? "#6BAED6"
+      : newsCount > 0
+      ? "#BDD7E7"
+      : "#DDDDDD";
   };
 }
 
