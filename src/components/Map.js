@@ -2,9 +2,8 @@ import React from "react";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./Map.css";
-import stuntingData from "../data/data-stunting.json";
 
-const Map = ({ province, key, options }) => {
+const Map = ({ province, key, options, setDrawer }) => {
   const mapStyle = {
     weight: 1,
     color: "black",
@@ -37,12 +36,9 @@ const Map = ({ province, key, options }) => {
   };
 
   const clickOnProvince = (e, properties) => {
-    const name = properties.KABUPATEN;
-    let localYear = options.year;
-    if (!stuntingData[options.year]) {
-      localYear = options.year - 1;
-    }
-    console.log(`${name} : ${stuntingData[localYear][name]}`);
+    setDrawer((curr) => {
+      return { ...curr, isOpen: true, province: properties.KABUPATEN };
+    });
   };
 
   return (

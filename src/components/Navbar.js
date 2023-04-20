@@ -3,7 +3,7 @@ import { AppBar, Toolbar } from "@mui/material";
 
 const Navbar = () => {
   return (
-    <AppBar position="relative" sx={{ height: "9vh" }}>
+    <AppBar position="relative" sx={{ height: "9vh", zIndex: 1400 }}>
       <Toolbar sx={{ display: "flex", alignItems: "center" }}>
         {/*<Typography variant="h5" component="div">*/}
         <h2>

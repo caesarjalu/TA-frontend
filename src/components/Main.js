@@ -4,18 +4,21 @@ import Map from "./Map";
 import Legend from "./Legend";
 import Loading from "./Loading";
 import Navbar from "./Navbar";
+import DrawerComp from "./DrawerComp";
 
 const Main = () => {
   const [province, setProvince] = useState([]);
   const [options, setOptions] = useState({ year: 2023, mode: "prevalence" });
   const [key, setKey] = useState(0);
+  const [drawer, setDrawer] = useState({ isOpen: false, province: "" });
+
   const load = () => {
     const loadDataTask = new LoadDataTask();
     loadDataTask.load(options, (province) => setProvince(province));
     // console.log(options);
   };
 
-  useEffect(load, [options, province]);
+  useEffect(load, [options]);
 
   const handleOptionChange = (newValue) => {
     setOptions((curr) => {
@@ -34,8 +37,14 @@ const Main = () => {
       ) : (
         <div>
           <Navbar />
+          <DrawerComp state={drawer} setState={setDrawer} year={options.year} />
           <div>
-            <Map province={province} key={key} options={options} />
+            <Map
+              province={province}
+              key={key}
+              options={options}
+              setDrawer={setDrawer}
+            />
           </div>
           <div>
             <Legend setOptions={handleOptionChange} />
