@@ -7,14 +7,14 @@ import Navbar from "./Navbar";
 import DrawerComp from "./DrawerComp";
 
 const Main = () => {
-  const [province, setProvince] = useState([]);
+  const [locations, setLocations] = useState([]);
   const [options, setOptions] = useState({ year: 2023, mode: "prevalence" });
   const [key, setKey] = useState(0);
-  const [drawer, setDrawer] = useState({ isOpen: false, province: "" });
+  const [drawer, setDrawer] = useState({ isOpen: false, location: "" });
 
   const load = () => {
     const loadDataTask = new LoadDataTask();
-    loadDataTask.load(options, (province) => setProvince(province));
+    loadDataTask.load(options, (locations) => setLocations(locations));
     // console.log(options);
   };
 
@@ -32,7 +32,7 @@ const Main = () => {
 
   return (
     <div className="container">
-      {province.length === 0 ? (
+      {locations.length === 0 ? (
         <Loading />
       ) : (
         <div>
@@ -40,7 +40,7 @@ const Main = () => {
           <DrawerComp state={drawer} setState={setDrawer} year={options.year} />
           <div>
             <Map
-              province={province}
+              locations={locations}
               key={key}
               options={options}
               setDrawer={setDrawer}

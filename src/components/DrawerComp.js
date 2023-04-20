@@ -9,7 +9,7 @@ const DrawerComp = ({ state, setState, year }) => {
   if (!stuntingData[year]) {
     stuntYear = year - 1;
   }
-  const prevalence = stuntingData[stuntYear][state.province];
+  const prevalence = stuntingData[stuntYear][state.location];
 
   const handleClose = () => {
     setState((curr) => {
@@ -31,7 +31,7 @@ const DrawerComp = ({ state, setState, year }) => {
       >
         <CloseIcon fontSize="medium" />
       </IconButton>
-      <Typography variant="h4">{state.province}</Typography>
+      <Typography variant="h4">{state.location}</Typography>
       <Typography variant="subtitle1" sx={{ marginBottom: 2 }}>
         Prevalensi Stunting: {prevalence}% ({stuntYear})
       </Typography>

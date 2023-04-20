@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./Map.css";
 
-const Map = ({ province, key, options, setDrawer }) => {
+const Map = ({ locations, key, options, setDrawer }) => {
   const mapStyle = {
     weight: 1,
     color: "black",
@@ -15,7 +15,7 @@ const Map = ({ province, key, options, setDrawer }) => {
     [-10.721113949189322, 117.8411522825802], // North East
   ];
 
-  const onEachProvince = (feature, layer) => {
+  const onEachLocations = (feature, layer) => {
     layer.options.fillColor = feature.properties.color;
     const name = feature.properties.KABUPATEN;
     let number;
@@ -30,14 +30,14 @@ const Map = ({ province, key, options, setDrawer }) => {
     layer.bindTooltip(`${name} : ${number}${ending}`, { sticky: true });
     layer.on({
       click: (e) => {
-        clickOnProvince(e, feature.properties);
+        clickOnLocation(e, feature.properties);
       },
     });
   };
 
-  const clickOnProvince = (e, properties) => {
+  const clickOnLocation = (e, properties) => {
     setDrawer((curr) => {
-      return { ...curr, isOpen: true, province: properties.KABUPATEN };
+      return { ...curr, isOpen: true, location: properties.KABUPATEN };
     });
   };
 
@@ -57,9 +57,9 @@ const Map = ({ province, key, options, setDrawer }) => {
       />
       <GeoJSON
         key={key}
-        data={province}
+        data={locations}
         style={mapStyle}
-        onEachFeature={onEachProvince}
+        onEachFeature={onEachLocations}
       />
     </MapContainer>
   );
