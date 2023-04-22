@@ -1,17 +1,26 @@
 import React from "react";
-import { AppBar, Toolbar } from "@mui/material";
+import { AppBar, Toolbar, Typography } from "@mui/material";
 
 const Navbar = () => {
   return (
-    <AppBar position="relative" sx={{ height: "9vh", zIndex: 1400 }}>
-      <Toolbar sx={{ display: "flex", alignItems: "center" }}>
-        {/*<Typography variant="h5" component="div">*/}
-        <h2>
-          <b>Pusat Informasi Stunting Jawa Timur</b>
-        </h2>
-        {/*</Typography>*/}
-      </Toolbar>
-    </AppBar>
+    <div>
+      <AppBar
+        position="fixed"
+        sx={{
+          height: "9vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
+        <Toolbar sx={{ display: "flex", alignItems: "center" }}>
+          <Typography variant="h5" component="div">
+            <b>Pusat Informasi Stunting Jawa Timur</b>
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Toolbar sx={{ height: "9vh" }} />
+    </div>
   );
 };
 
