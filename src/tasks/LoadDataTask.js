@@ -11,29 +11,22 @@ class LoadDataTask {
     this.year = options.year;
     if (options.mode === "news_data") {
       // do news data
-      console.log("News Data");
       this.#processStuntingNewsData();
     } else {
-      console.log("Prevalence Data");
       this.#processStuntingPrevalenceData();
     }
   };
 
   #processStuntingPrevalenceData = () => {
-    let localYear = this.year;
-    if (!stuntingData[this.year]) {
-      localYear = this.year - 1;
-    }
-    for (let i = 0; i < mapJatim.features.length; i++) {
-      const province = mapJatim.features[i];
-      const name = province.properties.KABUPATEN;
+    const localYear = stuntingData[this.year] ? this.year : this.year - 1;
+    for (let feature of mapJatim.features) {
+      const name = feature.properties.KABUPATEN;
       const prevalence = stuntingData[localYear][name]
         ? stuntingData[localYear][name]
         : 0;
-      province.properties.prevalence = prevalence;
-      province.properties.color = this.#setPrevalenceColor(prevalence);
+      feature.properties.prevalence = prevalence;
+      feature.properties.color = this.#setPrevalenceColor(prevalence);
     }
-    // console.log(mapJatim.features[0].properties.color);
     this.setState(mapJatim);
   };
 
@@ -51,16 +44,14 @@ class LoadDataTask {
 
   #processStuntingNewsData = () => {
     let localYear = this.year;
-    for (let i = 0; i < mapJatim.features.length; i++) {
-      const province = mapJatim.features[i];
-      const name = province.properties.KABUPATEN;
+    for (let feature of mapJatim.features) {
+      const name = feature.properties.KABUPATEN;
       const newsCount = newsData[localYear][name]
         ? newsData[localYear][name]
         : 0;
-      province.properties.news_count = newsCount;
-      province.properties.color = this.#setNewsDataColor(newsCount);
+      feature.properties.news_count = newsCount;
+      feature.properties.color = this.#setNewsDataColor(newsCount);
     }
-    // console.log(mapJatim.features[0].properties.color);
     this.setState(mapJatim);
   };
 

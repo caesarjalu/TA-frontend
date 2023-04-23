@@ -39,7 +39,14 @@ const NewsList = ({ loc, year }) => {
     return newsList;
   };
 
-  return <Box>{getNewsList()}</Box>;
+  return (
+    <Box>
+      <Typography variant="subtitle1" gutterBottom>
+        <i>Ditemukan {newsData[year][loc]} Berita</i>
+      </Typography>
+      {getNewsList()}
+    </Box>
+  );
 };
 
 export default NewsList;

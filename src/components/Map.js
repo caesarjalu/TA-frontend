@@ -18,16 +18,11 @@ const Map = ({ locations, key, options, setDrawer }) => {
   const onEachLocations = (feature, layer) => {
     layer.options.fillColor = feature.properties.color;
     const name = feature.properties.KABUPATEN;
-    let number;
-    let ending;
-    if (options.mode === "prevalence") {
-      number = feature.properties.prevalence;
-      ending = "%";
-    } else {
-      number = feature.properties.news_count;
-      ending = " berita";
-    }
-    layer.bindTooltip(`${name} : ${number}${ending}`, { sticky: true });
+    const tooltipData =
+      options.mode === "news_data"
+        ? `${feature.properties.news_count} berita`
+        : `${feature.properties.prevalence}%`;
+    layer.bindTooltip(`${name} : ${tooltipData}`, { sticky: true });
     layer.on({
       click: (e) => {
         clickOnLocation(e, feature.properties);
