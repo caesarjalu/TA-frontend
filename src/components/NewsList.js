@@ -42,7 +42,7 @@ const NewsList = ({ loc, year }) => {
   return (
     <Box>
       <Typography variant="subtitle1" gutterBottom>
-        <i>Ditemukan {newsData[year][loc]} Berita</i>
+        <i>Ditemukan {newsData[year][loc]} berita program stunting</i>
       </Typography>
       {getNewsList()}
     </Box>
