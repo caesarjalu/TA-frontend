@@ -1,12 +1,33 @@
 import mapJatim from "../data/data-jatim.json";
-import stuntingData from "../data/data-stunting.json";
-import newsData from "../data/data-berita-dummy.json";
+import db from "../services/firebase";
+import { getDocs, collection } from "firebase/firestore";
 
 class LoadDataTask {
   setState = null;
   year = 2023;
+  stuntingData = {};
+  newsCountData = {};
 
-  load = (options, setState) => {
+  init = async () => {
+    this.stuntingData = await this.#getDataFromFirestore("prevalence");
+    this.newsCountData = await this.#getDataFromFirestore("newscount");
+  };
+
+  #getDataFromFirestore = async (collectionName) => {
+    try {
+      const snapshot = collection(db, collectionName);
+      const snapData = await getDocs(snapshot);
+      const data = {};
+      snapData.forEach((doc) => {
+        data[doc.id] = doc.data();
+      });
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  loadMapData = (options, setState) => {
     this.setState = setState;
     this.year = options.year;
     if (options.mode === "news_data") {
@@ -18,11 +39,12 @@ class LoadDataTask {
   };
 
   #processStuntingPrevalenceData = () => {
-    const localYear = stuntingData[this.year] ? this.year : this.year - 1;
+    const localYear = this.stuntingData[this.year] ? this.year : this.year - 1;
+
     for (let feature of mapJatim.features) {
-      const name = feature.properties.KABUPATEN;
-      const prevalence = stuntingData[localYear][name]
-        ? stuntingData[localYear][name]
+      const name = feature.properties.KABUPATEN.toLowerCase();
+      const prevalence = this.stuntingData[localYear.toString()][name]
+        ? this.stuntingData[localYear][name]
         : 0;
       feature.properties.prevalence = prevalence;
       feature.properties.color = this.#setPrevalenceColor(prevalence);
@@ -45,9 +67,9 @@ class LoadDataTask {
   #processStuntingNewsData = () => {
     let localYear = this.year;
     for (let feature of mapJatim.features) {
-      const name = feature.properties.KABUPATEN;
-      const newsCount = newsData[localYear][name]
-        ? newsData[localYear][name]
+      const name = feature.properties.KABUPATEN.toLowerCase();
+      const newsCount = this.newsCountData[localYear][name]
+        ? this.newsCountData[localYear][name]
         : 0;
       feature.properties.news_count = newsCount;
       feature.properties.color = this.#setNewsDataColor(newsCount);
@@ -56,7 +78,7 @@ class LoadDataTask {
   };
 
   #setNewsDataColor = (newsCount) => {
-    return newsCount > 15
+    return newsCount > 20
       ? "#08519C"
       : newsCount > 10
       ? "#3182BD"

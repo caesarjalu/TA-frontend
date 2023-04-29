@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./Map.css";
 
-const Map = ({ locations, key, options, setDrawer }) => {
+const Map = ({ locations, options, setDrawer }) => {
   const mapStyle = {
     weight: 1,
     color: "black",
@@ -38,7 +38,7 @@ const Map = ({ locations, key, options, setDrawer }) => {
 
   return (
     <MapContainer
-      center={[-7.721113949189322, 112.8411522825802]}
+      center={[-7.75, 113.1]}
       zoom={8}
       scrollWheelZoom={true}
       style={{ height: "91vh", width: "100%", margin: "0 auto" }}
@@ -51,7 +51,6 @@ const Map = ({ locations, key, options, setDrawer }) => {
         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <GeoJSON
-        key={key}
         data={locations}
         style={mapStyle}
         onEachFeature={onEachLocations}

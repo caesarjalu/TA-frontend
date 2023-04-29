@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Typography, Link, Box } from "@mui/material";
-import newsData from "../data/data-berita-dummy.json";
+import db from "../services/firebase";
+import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 
 const NewsList = ({ loc, year }) => {
-  const loremIpsum =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In pulvinar eros ut dignissim scelerisque. Integer vitae scelerisque justo. Nam sollicitudin volutpat mi, sed commodo ante lacinia ut. Pellentesque sem odio, faucibus id laoreet sed, convallis a lacus. Etiam sed ullamcorper lorem. Suspendisse tristique vulputate metus vitae sagittis. Praesent ac malesuada nisl. Morbi hendrerit, nisl quis convallis euismod, turpis sem bibendum sem, vitae accumsan ante urna a nisi. Morbi rhoncus neque lectus, in gravida sem semper vel. Maecenas scelerisque tincidunt ante, quis facilisis neque sodales ut. Morbi vehicula vitae arcu et eleifend. Phasellus iaculis posuere euismod. Etiam at arcu in dui consectetur aliquet elementum nec ex. Etiam mollis diam est, non luctus lectus molestie sit amet. Phasellus interdum efficitur malesuada.";
+  const [newsData, setNewsData] = useState([]);
   const listStyle = (maxLine) => {
     return {
       display: "-webkit-box",
@@ -14,24 +14,53 @@ const NewsList = ({ loc, year }) => {
     };
   };
 
-  const setNewsCount = () => {
-    return newsData[year][loc];
+  const getNewsFromFirestore = async () => {
+    const q = query(
+      collection(db, "newsdata"),
+      where("published_date", ">=", new Date(year.toString())),
+      where("published_date", "<", new Date((year + 1).toString())),
+      where("location", "array-contains", loc.toLowerCase()),
+      orderBy("published_date", "desc")
+    );
+    const querySnapshot = await getDocs(q);
+    let data = [];
+    querySnapshot.forEach((doc) => {
+      const tempDoc = doc.data();
+      tempDoc.id = doc.id;
+      data.push(tempDoc);
+    });
+    setNewsData(data);
   };
+
+  useEffect(() => {
+    getNewsFromFirestore();
+  });
 
   const getNewsList = () => {
     let newsList = [];
-    for (let i = 0; i < setNewsCount(); i++) {
+    for (const news of newsData) {
+      const date = news.published_date.toDate().toLocaleDateString("id-id", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
       newsList.push(
-        <Box sx={{ py: 1 }}>
+        <Box sx={{ py: 1 }} key={news.id}>
           <Typography variant="body2" sx={listStyle(1)} color="green">
-            1 Jan {year} - berita.com
+            {date} - {news.publisher}
           </Typography>
-          <Link href="#" variant="h6" sx={listStyle(2)}>
-            Judul Berita Yang Panjang Sekali dari {loc} Dan Dibuat Sampe 2
-            Baris, Kalo 3 Baris Apakah Bisa?
+          <Link
+            href={news.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={news.title}
+            variant="h6"
+            sx={listStyle(2)}
+          >
+            {news.title}
           </Link>
           <Typography variant="body2" sx={listStyle(3)} gutterBottom>
-            {loremIpsum}
+            {news.text}
           </Typography>
         </Box>
       );
@@ -42,7 +71,9 @@ const NewsList = ({ loc, year }) => {
   return (
     <Box>
       <Typography variant="subtitle1" gutterBottom>
-        <i>Ditemukan {newsData[year][loc]} berita program stunting</i>
+        <i>
+          Ditemukan {newsData.length} berita program stunting pada tahun {year}
+        </i>
       </Typography>
       {getNewsList()}
     </Box>

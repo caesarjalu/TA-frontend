@@ -1,12 +1,11 @@
 import React from "react";
 import { Drawer, IconButton, Typography, AppBar, Box } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import stuntingData from "../data/data-stunting.json";
 import NewsList from "./NewsList";
 
-const DrawerComp = ({ state, setState, year }) => {
+const DrawerComp = ({ state, setState, year, stuntingData }) => {
   const stuntYear = stuntingData[year] ? year : year - 1;
-  const prevalence = stuntingData[stuntYear][state.location];
+  const prevalence = stuntingData[stuntYear][state.location.toLowerCase()];
 
   const handleClose = () => {
     setState((curr) => {
@@ -19,7 +18,7 @@ const DrawerComp = ({ state, setState, year }) => {
       anchor="right"
       variant="persistent"
       open={state.isOpen}
-      PaperProps={{ sx: { width: "28%" } }}
+      PaperProps={{ sx: { width: "30%" } }}
     >
       <AppBar
         position="sticky"

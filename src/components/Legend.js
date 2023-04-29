@@ -112,10 +112,10 @@ const Legend = ({ setOptions }) => {
                 <Typography>6-10 Berita</Typography>
               </div>
               <div style={{ "--color": "#3182BD" }}>
-                <Typography>11-15 Berita</Typography>
+                <Typography>11-20 Berita</Typography>
               </div>
               <div style={{ "--color": "#08519C" }}>
-                <Typography>&gt;15 Berita</Typography>
+                <Typography>&gt;20 Berita</Typography>
               </div>
             </TabPanel>
           </TabContext>

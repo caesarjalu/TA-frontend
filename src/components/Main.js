@@ -6,28 +6,35 @@ import Loading from "./Loading";
 import Navbar from "./Navbar";
 import DrawerComp from "./DrawerComp";
 
+const loadDataTask = new LoadDataTask();
+
 const Main = () => {
   const [locations, setLocations] = useState([]);
   const [options, setOptions] = useState({ year: 2023, mode: "prevalence" });
   const [key, setKey] = useState(0);
   const [drawer, setDrawer] = useState({ isOpen: false, location: "" });
 
-  const load = () => {
-    const loadDataTask = new LoadDataTask();
-    loadDataTask.load(options, (locations) => setLocations(locations));
-    // console.log(options);
+  const firstLoad = async () => {
+    console.log("firstload");
+    await loadDataTask.init();
+    loadDataTask.loadMapData(options, (locations) => setLocations(locations));
   };
 
-  useEffect(load, [options]);
+  useEffect(() => {
+    firstLoad();
+  }, []);
 
   const handleOptionChange = (newValue) => {
     setOptions((curr) => {
+      const newOptions = { ...curr, ...newValue };
+      loadDataTask.loadMapData(newOptions, (locations) =>
+        setLocations(locations)
+      );
       return { ...curr, ...newValue };
     });
     setKey((currKey) => {
       return currKey + 1;
     });
-    // console.log(options);
   };
 
   return (
@@ -37,7 +44,12 @@ const Main = () => {
       ) : (
         <div>
           <Navbar />
-          <DrawerComp state={drawer} setState={setDrawer} year={options.year} />
+          <DrawerComp
+            state={drawer}
+            setState={setDrawer}
+            year={options.year}
+            stuntingData={loadDataTask.stuntingData}
+          />
           <div>
             <Map
               locations={locations}
