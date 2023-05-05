@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import LoadDataTask from "../tasks/LoadDataTask";
 import Map from "./Map";
 import Legend from "./Legend";
@@ -13,6 +13,7 @@ const Main = () => {
   const [options, setOptions] = useState({ year: 2023, mode: "prevalence" });
   const [key, setKey] = useState(0);
   const [drawer, setDrawer] = useState({ isOpen: false, location: "" });
+  const effectRan = useRef(false);
 
   const firstLoad = async () => {
     console.log("firstload");
@@ -21,7 +22,10 @@ const Main = () => {
   };
 
   useEffect(() => {
-    firstLoad();
+    if (effectRan.current === false) {
+      firstLoad();
+      effectRan.current = true;
+    }
   }, []);
 
   const handleOptionChange = (newValue) => {

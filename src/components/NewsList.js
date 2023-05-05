@@ -15,26 +15,30 @@ const NewsList = ({ loc, year }) => {
   };
 
   const getNewsFromFirestore = async () => {
-    const q = query(
-      collection(db, "newsdata"),
-      where("published_date", ">=", new Date(year.toString())),
-      where("published_date", "<", new Date((year + 1).toString())),
-      where("location", "array-contains", loc.toLowerCase()),
-      orderBy("published_date", "desc")
-    );
-    const querySnapshot = await getDocs(q);
-    let data = [];
-    querySnapshot.forEach((doc) => {
-      const tempDoc = doc.data();
-      tempDoc.id = doc.id;
-      data.push(tempDoc);
-    });
-    setNewsData(data);
+    if (loc && year) {
+      console.log("Running getNewsFromFirestore");
+      const q = query(
+        collection(db, "newsdata"),
+        where("published_date", ">=", new Date(year.toString())),
+        where("published_date", "<", new Date((year + 1).toString())),
+        where("location", "array-contains", loc.toLowerCase()),
+        orderBy("published_date", "desc")
+      );
+      const querySnapshot = await getDocs(q);
+      let data = [];
+      querySnapshot.forEach((doc) => {
+        const tempDoc = doc.data();
+        tempDoc.id = doc.id;
+        data.push(tempDoc);
+      });
+      console.log(data);
+      setNewsData(data);
+    }
   };
 
   useEffect(() => {
     getNewsFromFirestore();
-  });
+  }, [loc, year]);
 
   const getNewsList = () => {
     let newsList = [];
@@ -72,7 +76,8 @@ const NewsList = ({ loc, year }) => {
     <Box>
       <Typography variant="subtitle1" gutterBottom>
         <i>
-          Ditemukan {newsData.length} berita program stunting pada tahun {year}
+          Ditemukan {newsData.length} berita program stunting di {loc} pada
+          tahun {year}
         </i>
       </Typography>
       {getNewsList()}

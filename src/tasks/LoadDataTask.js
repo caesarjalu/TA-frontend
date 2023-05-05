@@ -8,9 +8,19 @@ class LoadDataTask {
   stuntingData = {};
   newsCountData = {};
 
+  #isObjectEmpty = (objectName) => {
+    return Object.keys(objectName).length === 0;
+  };
+
   init = async () => {
-    this.stuntingData = await this.#getDataFromFirestore("prevalence");
-    this.newsCountData = await this.#getDataFromFirestore("newscount");
+    if (this.#isObjectEmpty(this.stuntingData)) {
+      console.log("get prevalence");
+      this.stuntingData = await this.#getDataFromFirestore("prevalence");
+    }
+    if (this.#isObjectEmpty(this.newsCountData)) {
+      console.log("get news count");
+      this.newsCountData = await this.#getDataFromFirestore("newscount");
+    }
   };
 
   #getDataFromFirestore = async (collectionName) => {
