@@ -15,7 +15,7 @@ const Navbar = () => {
       >
         <Toolbar sx={{ display: "flex", alignItems: "center" }}>
           <Typography variant="h5" component="div">
-            <b>Pusat Informasi Stunting Jawa Timur</b>
+            <b>Pusat Informasi Program Stunting Jawa Timur</b>
           </Typography>
         </Toolbar>
       </AppBar>
