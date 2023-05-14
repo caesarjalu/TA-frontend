@@ -13,17 +13,6 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCq4TzUPRRp4qCvS7PIMuWCcYmqKiUqubE",
-//   authDomain: "stunting-jatim.firebaseapp.com",
-//   databaseURL:
-//     "https://stunting-jatim-default-rtdb.asia-southeast1.firebasedatabase.app",
-//   projectId: "stunting-jatim",
-//   storageBucket: "stunting-jatim.appspot.com",
-//   messagingSenderId: "1043705321846",
-//   appId: "1:1043705321846:web:0c89fe2447a748aa65c257",
-// };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export default getFirestore(app);
