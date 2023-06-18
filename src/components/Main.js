@@ -60,6 +60,7 @@ const Main = () => {
               key={key}
               options={options}
               setDrawer={setDrawer}
+              updatedTime={loadDataTask.updatedTime}
             />
           </div>
           <div>

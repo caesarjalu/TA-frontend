@@ -7,6 +7,7 @@ class LoadDataTask {
   year = 2023;
   stuntingData = {};
   newsCountData = {};
+  updatedTime = null;
 
   #isObjectEmpty = (objectName) => {
     return Object.keys(objectName).length === 0;
@@ -20,6 +21,10 @@ class LoadDataTask {
     if (this.#isObjectEmpty(this.newsCountData)) {
       console.log("get news count");
       this.newsCountData = await this.#getDataFromFirestore("newscount");
+    }
+    if (this.updatedTime === null) {
+      this.updatedTime = await this.#getUpdatedTime();
+      this.updatedTime = this.updatedTime.toDate().toLocaleString("id-id");
     }
   };
 
@@ -35,6 +40,11 @@ class LoadDataTask {
     } catch (e) {
       console.log(e);
     }
+  };
+
+  #getUpdatedTime = async () => {
+    const misc = await this.#getDataFromFirestore("misc");
+    return misc["misc-data"]["UpdatedAt"];
   };
 
   loadMapData = (options, setState) => {
