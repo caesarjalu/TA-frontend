@@ -27,10 +27,6 @@ class LoadDataTask {
           .toLocaleString("id-id");
       }
     }
-    // if (this.updatedTime === null) {
-    //   this.updatedTime = await this.#getUpdatedTime();
-    //   this.updatedTime = this.updatedTime.toDate().toLocaleString("id-id");
-    // }
   };
 
   #getDataFromFirestore = async (collectionName) => {
@@ -45,11 +41,6 @@ class LoadDataTask {
     } catch (e) {
       console.log(e);
     }
-  };
-
-  #getUpdatedTime = async () => {
-    const misc = await this.#getDataFromFirestore("misc");
-    return misc["misc-data"]["UpdatedAt"];
   };
 
   loadMapData = (options, setState) => {
