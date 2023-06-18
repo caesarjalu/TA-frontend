@@ -21,11 +21,16 @@ class LoadDataTask {
     if (this.#isObjectEmpty(this.newsCountData)) {
       console.log("get news count");
       this.newsCountData = await this.#getDataFromFirestore("newscount");
+      if (this.updatedTime === null) {
+        this.updatedTime = this.newsCountData["misc"]["UpdatedAt"]
+          .toDate()
+          .toLocaleString("id-id");
+      }
     }
-    if (this.updatedTime === null) {
-      this.updatedTime = await this.#getUpdatedTime();
-      this.updatedTime = this.updatedTime.toDate().toLocaleString("id-id");
-    }
+    // if (this.updatedTime === null) {
+    //   this.updatedTime = await this.#getUpdatedTime();
+    //   this.updatedTime = this.updatedTime.toDate().toLocaleString("id-id");
+    // }
   };
 
   #getDataFromFirestore = async (collectionName) => {
