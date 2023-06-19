@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./Map.css";
 
-const Map = ({ locations, options, setDrawer, updatedTime }) => {
+const Map = ({ locations, options, setDrawer, updatedTime, totalNews }) => {
   const mapStyle = {
     weight: 1,
     color: "black",
@@ -15,7 +15,7 @@ const Map = ({ locations, options, setDrawer, updatedTime }) => {
     [-10.721113949189322, 117.8411522825802], // North East
   ];
 
-  const attribution = `Map By <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | Last Updated: ${updatedTime}`;
+  const attribution = `Map Oleh <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | Total Berita: ${totalNews} | Terakhir Diupdate: ${updatedTime}`;
 
   const onEachLocations = (feature, layer) => {
     layer.options.fillColor = feature.properties.color;

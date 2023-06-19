@@ -61,6 +61,7 @@ const Main = () => {
               options={options}
               setDrawer={setDrawer}
               updatedTime={loadDataTask.updatedTime}
+              totalNews={loadDataTask.totalNews}
             />
           </div>
           <div>

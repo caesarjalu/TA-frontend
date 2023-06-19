@@ -1,6 +1,6 @@
 import mapJatim from "../data/data-jatim.json";
 import db from "../services/firebase";
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, getCountFromServer } from "firebase/firestore";
 
 class LoadDataTask {
   setState = null;
@@ -8,6 +8,7 @@ class LoadDataTask {
   stuntingData = {};
   newsCountData = {};
   updatedTime = null;
+  totalNews = 0;
 
   #isObjectEmpty = (objectName) => {
     return Object.keys(objectName).length === 0;
@@ -27,6 +28,9 @@ class LoadDataTask {
           .toLocaleString("id-id");
       }
     }
+    if (this.totalNews === 0) {
+      this.totalNews = await this.#getTotalNews();
+    }
   };
 
   #getDataFromFirestore = async (collectionName) => {
@@ -38,6 +42,16 @@ class LoadDataTask {
         data[doc.id] = doc.data();
       });
       return data;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  #getTotalNews = async () => {
+    try {
+      const coll = collection(db, "newsdata");
+      const snapshot = await getCountFromServer(coll);
+      return snapshot.data().count;
     } catch (e) {
       console.log(e);
     }
